@@ -1,1 +1,0 @@
-# pinterest_replica_frontend
