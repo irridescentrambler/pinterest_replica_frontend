@@ -50,6 +50,14 @@
     "react-uikit-comment": "^2.0.2",
     "react-uikit-comment-list": "^2.0.1",
     "shuffle-array": "^1.0.1",
-    "thousanday-react": "^0.9.6"
+    "thousanday-react": "^0.9.6",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.15.3",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }
