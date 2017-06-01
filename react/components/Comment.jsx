@@ -3,6 +3,7 @@ import UiComment from "react-uikit-comment";
 import { ListGroupItem, Image, Glyphicon, Button } from "react-bootstrap";
 import ApplicationStore from '../stores/ApplicationStore.jsx';
 import ApplicationActions from '../actions/ApplicationActions.jsx';
+import serverConfig from "../server_config.jsx";
 
 class Comment extends React.Component{
   constructor(props) {
@@ -22,7 +23,7 @@ class Comment extends React.Component{
   render(){
     return(
       <ListGroupItem>
-        <Image src = { "http://localhost:3000" + this.props.comment.user.avatar.thumb.url } circle />
+        <Image src = { serverConfig.url + this.props.comment.user.avatar.thumb.url } circle />
         <b>  { this.props.comment.comment }</b>
         <br/>
         <Glyphicon onClick = { () => { this.likeComment( this.props.comment.id ) } } glyph="thumbs-up" />

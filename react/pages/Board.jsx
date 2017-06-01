@@ -3,6 +3,7 @@ import { Grid, Row, Col, Button, Modal, FormGroup, FormControl } from "react-boo
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import PinsGallery from "../components/PinsGallery.jsx";
+import { browserHistory } from "react-router";
 
 class Board extends React.Component {
   constructor(props) {
@@ -20,6 +21,9 @@ class Board extends React.Component {
   }
 
   componentWillMount() {
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
     this.state = {
       showUploadPinForm: false,
       board: {},

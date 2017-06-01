@@ -4,6 +4,7 @@ import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import { browserHistory } from 'react-router';
 import DashboardPinsGallery from "../components/DashboardPinsGallery.jsx";
+import Spinner from "react-spinkit";
 
 class Dashboard extends React.Component {
 
@@ -13,16 +14,19 @@ class Dashboard extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentWillMount(){
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
+    this.state = {
+      pins: ApplicationStore.getState().pins
+    }
+  }
+
   componentDidMount(){
     ApplicationStore.listen(() => {
       this.onChange();
     });
-  }
-
-  componentWillMount(){
-    this.state = {
-      pins: ApplicationStore.getState().pins
-    }
   }
 
   onChange(){
@@ -33,9 +37,12 @@ class Dashboard extends React.Component {
 
   render(){
     return(
-      <div style={{ "marginTop" : "75px" }}>
-        <DashboardPinsGallery pins = { this.state.pins } />
-      </div>
+      <Grid>
+        <div style={{ "marginTop" : "75px" }}>
+          <Spinner name='double-bounce' />
+          <DashboardPinsGallery pins = { this.state.pins } />
+        </div>
+      </Grid>
     );
   }
 }

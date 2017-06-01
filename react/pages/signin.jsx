@@ -1,7 +1,8 @@
 import React from "react";
-import { Form, FormGroup, FormControl, Button, Col, ControlLabel, Checkbox, Row, Grid } from "react-bootstrap";
+import { Form, FormGroup, FormControl, Button, Col, ControlLabel, Checkbox, Row, Grid, Alert } from "react-bootstrap";
 import ApplicationActions from "../actions/ApplicationActions.jsx"
 import ApplicationStore from "../stores/ApplicationStore.jsx"
+import { browserHistory } from "react-router";
 
 class SignIn extends React.Component {
   constructor(props){
@@ -11,48 +12,70 @@ class SignIn extends React.Component {
 
   handleLogin(event){
     event.preventDefault();
-    const state = {
+    ApplicationActions.sendRequest({
       email: event.target.email.value,
       password: event.target.password.value
+    });
+  }
+
+  componentWillMount() {
+    if(ApplicationStore.getState().responseHeaders.expiry > Math.floor(Date.now() / 1000)){
+      browserHistory.push("/dashboard");
     }
-    this.setState(state);
-    ApplicationActions.sendRequest(state);
+    this.state = {
+      message_display: "hidden",
+      message_type: "",
+      message: ""
+    }
+  }
+
+  componentDidMount() {
+
   }
 
   render(){
     return(
-      <Grid bsClass="container" style={{ "margin-top" : "70px" }}>
+      <Grid bsClass="container" style={{ "marginTop" : "70px" }}>
+        <Row>
+          <Col sm = {1} md = {2} lg = {3}>
+          </Col>
+          <Col sm = {10} md = {8} lg = {6}>
+            <Alert bsStyle="warning" style = {{ "visibility" : this.state.message_display }}>
+              <strong> { this.state.message_type } </strong> { this.state.message }
+            </Alert>
+          </Col>
+          <Col sm = {1} md = {2} lg = {3}>
+          </Col>
+        </Row>
         <Row className="show-grid">
-          <Form horizontal onSubmit = { this.handleLogin }>
-            <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-                Email
-              </Col>
-              <Col sm={10}>
-                <FormControl type="email" placeholder="Email" name="email" />
-              </Col>
-            </FormGroup>
+          <Col sm = {1} md = {2} lg = {3}>
+          </Col>
+          <Col sm = {10} md = {8} lg = {6}>
+            <Form horizontal onSubmit = { this.handleLogin }>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col sm={10}>
+                  <FormControl type="email" placeholder="Email" name="email" />
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId="formHorizontalPassword">
-              <Col componentClass={ControlLabel} sm={2}>
-                Password
-              </Col>
-              <Col sm={10}>
-                <FormControl type="password" placeholder="Password" name="password" />
-              </Col>
-            </FormGroup>
+              <FormGroup controlId="formHorizontalPassword">
+                <Col sm={10}>
+                  <FormControl type="password" placeholder="Password" name="password" />
+                </Col>
+              </FormGroup>
 
-            <FormGroup>
-              <Col smOffset={2} sm={10}>
-                <Button type="submit">
-                  Sign in
-                </Button>
-              </Col>
-            </FormGroup>
+              <FormGroup>
+                <Col sm={10}>
+                  <Button bsStyle = "primary" type="submit">
+                    <b>Sign in</b>
+                  </Button>
+                </Col>
+              </FormGroup>
 
-            { this.state }
-
-          </Form>
+            </Form>
+          </Col>
+          <Col sm = {1} md = {2} lg = {3}>
+          </Col>
         </Row>
       </Grid>
     );

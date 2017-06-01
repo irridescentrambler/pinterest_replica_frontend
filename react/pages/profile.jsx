@@ -3,6 +3,8 @@ import { Grid, Col, Well, Row } from "react-bootstrap";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import { Updateprofile } from 'thousanday-react';
+import serverConfig from "../server_config.jsx";
+import { browserHistory } from "react-router";
 
 class Profile extends React.Component {
   constructor(props){
@@ -14,6 +16,9 @@ class Profile extends React.Component {
   }
 
   componentWillMount(){
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
     this.state = {
       userProfile: ApplicationStore.getState().responseData
     }
@@ -40,7 +45,7 @@ class Profile extends React.Component {
       <Grid style = {{ "marginTop" : "100px" }}>
         <Row>
           <Col xs={12} md={6} lg={4}>
-            <Updateprofile src={ "http://localhost:3000" + this.state.userProfile.avatar.url } width="200" saveProfile={ this.changeProfilePic } />
+            <Updateprofile src={ serverConfig.url + this.state.userProfile.avatar.url } width="200" saveProfile={ this.changeProfilePic } />
           </Col>
           <Col xs={12} md={6} lg={8}>
             <Well>Email: { this.state.userProfile.email }</Well>

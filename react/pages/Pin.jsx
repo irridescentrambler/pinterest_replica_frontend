@@ -3,6 +3,8 @@ import { Grid, Row, Image, Col, FormGroup, FormControl, Button, Glyphicon } from
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import CommentList from "../components/CommentList.jsx";
+import serverConfig from "../server_config.jsx";
+import { browserHistory } from "react-router";
 
 class Pin extends React.Component {
   constructor(props) {
@@ -16,6 +18,9 @@ class Pin extends React.Component {
   }
 
   componentWillMount() {
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
     this.state = {
       pin: {},
       uploader: {},
@@ -47,11 +52,11 @@ class Pin extends React.Component {
   }
 
   getPinContent(pin){
-    return ( ( pin.pin_content ) ? ("http://localhost:3000" + pin.pin_content.url) : "" )
+    return ( ( pin.pin_content ) ? ( serverConfig.url + pin.pin_content.url) : "" )
   }
 
   getUploaderContent(uploader){
-    return ( ( uploader.avatar ) ? ( "http://localhost:3000" + uploader.avatar.url ) : "" )
+    return ( ( uploader.avatar ) ? (  serverConfig.url + uploader.avatar.url ) : "" )
   }
 
   createComment(event){

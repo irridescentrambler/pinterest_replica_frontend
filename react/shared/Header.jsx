@@ -6,6 +6,7 @@ import ApplicationStore from "../stores/ApplicationStore.jsx";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import { Image } from "react-bootstrap";
 import { browserHistory } from "react-router";
+import serverConfig from "../server_config.jsx";
 
 class Header extends React.Component {
   constructor(props){
@@ -81,7 +82,7 @@ class Header extends React.Component {
               <Navbar.Collapse>
                 <Nav pullRight>
                   <NavItem onClick = { this.goToUploadPage }><span className="glyphicon glyphicon-plus" aria-hidden="true"></span></NavItem>
-                  <NavItem onClick={ this.navigateToProfile } ><Image src= { "http://localhost:3000" + this.state.responseData.avatar.url } style={{ "width" : "35px", "height" : "35px" }} circle /></NavItem>
+                  <NavItem onClick={ this.navigateToProfile } ><Image src= { serverConfig.url + this.state.responseData.avatar.url } style={{ "width" : "35px", "height" : "35px" }} circle /></NavItem>
                   <NavItem ><Link to="/dashboard">Dashboard</Link></NavItem>
                   <NavItem onClick = { this.logout }><Link to="/signin">Logout</Link></NavItem>
                 </Nav>

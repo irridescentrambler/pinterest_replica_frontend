@@ -1,5 +1,7 @@
 var path = require("path");
 var base_url = path.resolve(__dirname, "react");
+const PORT = process.env.PORT || 4000;
+
 module.exports = {
     entry: path.resolve(base_url, "app.jsx"),
     output: {
@@ -14,13 +16,18 @@ module.exports = {
               loader: "babel-loader",
               exclude: /node_modules/,
               include: path.resolve(__dirname, "react")
+            },
+            {
+              test: /\.css$/,
+              use: [ 'style-loader', 'css-loader' ]
             }
         ]
     },
     devServer: {
-    port: process.env.PORT || 8080,
+    port: PORT,
     historyApiFallback: true,
     contentBase: './',
-    hot: true
+    hot: true,
+    inline: true
   }
 };

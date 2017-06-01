@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Row, Col } from "react-bootstrap";
 import StackGrid, { transitions } from "react-stack-grid";
 import { browserHistory } from "react-router";
+import serverConfig from "../server_config.jsx";
 
 const { scaleDown } = transitions;
 
@@ -30,7 +31,7 @@ class Gallery extends React.Component {
             { this.props.boards.map((board) => {
               return(
               <div>
-                <Image onClick = { () => { this.goToBoard(board) } } src = { "http://localhost:3000" + board.cover.url } responsive />
+                <Image onClick = { () => { this.goToBoard(board) } } src = { serverConfig.url + board.cover.url } responsive />
                 <p>{ board.name }</p>
               </div>
               )

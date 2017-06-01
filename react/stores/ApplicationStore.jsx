@@ -2,6 +2,7 @@ import Alt from "../Alt.jsx";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import axios from "axios";
 import { browserHistory } from "react-router";
+import serverConfig from "../server_config.jsx";
 
 class ApplicationStore{
 
@@ -35,7 +36,7 @@ class ApplicationStore{
   }
 
   sendRequest(credentials){
-    axios.post('http://localhost:3000/auth/sign_in', {
+    axios.post(serverConfig.url + '/auth/sign_in', {
     email: credentials.email,
     password: credentials.password
   })
@@ -73,7 +74,7 @@ class ApplicationStore{
   }
 
   getPins(boolean){
-    axios.get('http://localhost:3000/pins', {
+    axios.get(serverConfig.url + '/pins', {
         params: {
           'access-token': this.responseHeaders["access-token"],
           'client': this.responseHeaders["client"],
@@ -101,7 +102,7 @@ class ApplicationStore{
   }
 
   createPin(data){
-    axios.post("http://localhost:3000/pins", {
+    axios.post(serverConfig.url + "/pins", {
       pin:{
         description: data.description,
         pin_content: data.picture,
@@ -121,7 +122,7 @@ class ApplicationStore{
 
   updateUserPicture(file){
     let user_id = this.responseData.id;
-    let route = "http://localhost:3000/users/" + user_id
+    let route = serverConfig.url + "/users/" + user_id
     axios.put(route, {
       avatar: file,
       'access-token': this.responseHeaders["access-token"],
@@ -145,7 +146,7 @@ class ApplicationStore{
   }
 
   createNewBoard(params){
-    axios.post("http://localhost:3000/boards", {
+    axios.post(serverConfig.url + "/boards", {
       board: {
         name: params.name,
         description: params.description,
@@ -164,7 +165,7 @@ class ApplicationStore{
   }
 
   getBoards(boolean){
-    axios.get("http://localhost:3000/boards", {
+    axios.get(serverConfig.url + "/boards", {
       params: {
       'access-token': this.responseHeaders["access-token"],
       'client': this.responseHeaders["client"],
@@ -183,7 +184,7 @@ class ApplicationStore{
   }
 
   getBoard(id){
-    let url = "http://localhost:3000/boards/" + id
+    let url = serverConfig.url + "/boards/" + id
     axios.get(url, {
       params: {
       'access-token': this.responseHeaders["access-token"],
@@ -204,7 +205,7 @@ class ApplicationStore{
   }
 
   showPin(id){
-    let url = "http://localhost:3000/pins/" + id
+    let url = serverConfig.url + "/pins/" + id
     axios.get(url, {
       params: {
       'access-token': this.responseHeaders["access-token"],
@@ -226,7 +227,7 @@ class ApplicationStore{
 
   createComment(data){
     let url = "/pin/" + data.comment_pin_id;
-    axios.post('http://localhost:3000/comments', {
+    axios.post(serverConfig.url + '/comments', {
       comment: {
         comment: data.comment_body,
         pin_id: data.comment_pin_id
@@ -247,7 +248,7 @@ class ApplicationStore{
   }
 
   likePin(id){
-    let url = "http://localhost:3000/pins/" + id + "/like";
+    let url = serverConfig.url + "/pins/" + id + "/like";
     axios.post(url, {
       'access-token': this.responseHeaders["access-token"],
       'client': this.responseHeaders["client"],
@@ -264,7 +265,7 @@ class ApplicationStore{
   }
 
   dislikePin(id){
-    let url = "http://localhost:3000/pins/" + id + "/dislike";
+    let url = serverConfig.url + "/pins/" + id + "/dislike";
     axios.post(url, {
       'access-token': this.responseHeaders["access-token"],
       'client': this.responseHeaders["client"],
@@ -281,7 +282,7 @@ class ApplicationStore{
   }
 
   likeComment(id){
-    let url = "http://localhost:3000/comments/" + id + "/like";
+    let url = serverConfig.url + "/comments/" + id + "/like";
     axios.post(url, {
       comment: {
         id: id,
@@ -303,7 +304,7 @@ class ApplicationStore{
   }
 
   dislikeComment(id){
-    let url = "http://localhost:3000/comments/" + id + "/dislike";
+    let url = serverConfig.url + "/comments/" + id + "/dislike";
     axios.post(url, {
       comment: {
         id: id,

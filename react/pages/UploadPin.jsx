@@ -6,6 +6,7 @@ import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import StackGrid from "react-stack-grid";
 import Gallery from "../components/Gallery.jsx";
+import { browserHistory } from "react-router";
 
 class UploadPin extends React.Component {
   constructor(props){
@@ -13,6 +14,23 @@ class UploadPin extends React.Component {
     this.toggleNewBoardForm = this.toggleNewBoardForm.bind(this);
     this.createNewBoard = this.createNewBoard.bind(this);
     this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount(){
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
+    this.state = {
+      showNewBoardForm: false,
+      boards: []
+    }
+  }
+
+  componentDidMount(){
+    ApplicationActions.getBoards();
+    ApplicationStore.listen(() => {
+      this.onChange();
+    });
   }
 
   onChange(){
@@ -24,23 +42,6 @@ class UploadPin extends React.Component {
   toggleNewBoardForm(){
     this.setState({
       showNewBoardForm: !this.state.showNewBoardForm
-    });
-  }
-
-  componentWillMount(){
-    console.log("Before Mounting");
-    this.state = {
-      showNewBoardForm: false,
-      boards: []
-    }
-    ApplicationActions.getBoards();
-  }
-
-  componentDidMount(){
-    console.log("Mounted");
-    ApplicationStore.listen(() => {
-      console.log("ApplicationStore state changed");
-      this.onChange();
     });
   }
 
@@ -86,9 +87,11 @@ class UploadPin extends React.Component {
             </Modal>
           </Row>
         </Grid>
-        <div style = {{ "marginTop" : "20px" }}>
-          <Gallery boards = { this.state.boards } />
-        </div>
+        <Grid>
+          <div style = {{ "marginTop" : "20px" }}>
+            <Gallery boards = { this.state.boards } />
+          </div>
+        </Grid>
       </div>
     );
   }

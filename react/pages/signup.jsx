@@ -2,19 +2,25 @@ import React from "react";
 import { Grid, Row, Col, Modal, Button, FormGroup, FormControl, ControlLabel, Checkbox, Form, Alert } from "react-bootstrap";
 import AuthenticationActions from "../actions/AuthenticationActions.jsx";
 import AuthenticationStore from "../stores/AuthenticationStore.jsx";
+import ApplicationActions from "../actions/ApplicationActions.jsx"
+import ApplicationStore from "../stores/ApplicationStore.jsx"
+import { browserHistory } from "react-router";
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(){
-    this.setState(AuthenticationStore.getState().signin_message);
+    this.setState(AuthenticationStore.getState().signup_message);
   }
 
   componentWillMount() {
+    if(ApplicationStore.getState().responseHeaders.expiry > Math.floor(Date.now() / 1000)){
+      browserHistory.push("/dashboard");
+    }
     this.state = {
       message_display: "hidden",
       message_type: "",
@@ -28,10 +34,10 @@ class SignUp extends React.Component {
     });
   }
 
-  signIn(event){
+  signUp(event){
     event.preventDefault();
     if(event.target.password.value == event.target.confirmed_password.value){
-      AuthenticationActions.signIn({
+      AuthenticationActions.signUp({
         email: event.target.email.value,
         password: event.target.password.value
       });
@@ -60,8 +66,8 @@ class SignUp extends React.Component {
         <Row>
           <Col lg = {4} md = {3} sm = {1}></Col>
           <Col lg = {4} md = {6} sm = {10} style = {{ "borderRadius" : "5%", "paddingTop" : "15px", "paddingBottom" : "15px" }}>
-            <div style={{ "marginTop" : "50px" }}>
-              <form onSubmit = { this.signIn }>
+            <div>
+              <form onSubmit = { this.signUp }>
                 <FormGroup>
                   <FormControl type="text" placeholder="Email" name="email"/>
                 </FormGroup>
