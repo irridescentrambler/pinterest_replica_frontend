@@ -1,4 +1,4 @@
-import Alt from "../Alt.jsx"
+import Alt from "../Alt.jsx";
 
 class ApplicationActions {
   sendRequest(credentials){
@@ -59,6 +59,10 @@ class ApplicationActions {
 
   dislikeComment(id){
     return id;
+  }
+
+  getNewToken(response){
+    return response;
   }
 }
 

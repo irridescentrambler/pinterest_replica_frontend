@@ -29,9 +29,9 @@ class ApplicationStore{
       likePin: ApplicationActions.likePin,
       dislikePin: ApplicationActions.dislikePin,
       likeComment: ApplicationActions.likeComment,
-      dislikeComment: ApplicationActions.dislikeComment
+      dislikeComment: ApplicationActions.dislikeComment,
+      getNewToken: ApplicationActions.getNewToken
     });
-    this.getNewToken = this.getNewToken.bind(this);
     this.getNewUserData = this.getNewUserData.bind(this);
   }
 
@@ -85,8 +85,7 @@ class ApplicationStore{
       this.setState({
         pins: response.data
       })
-      console.log(response.data)
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -113,7 +112,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       browserHistory.push("/dashboard");
     }).catch((error) => {
       console.log(error);
@@ -130,7 +129,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       this.getNewUserData(response);
       location.reload();
     }).catch((error) => {
@@ -157,7 +156,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       browserHistory.push("/upload_pin");
     }).catch((error) => {
       alert("Unable to create board");
@@ -173,11 +172,10 @@ class ApplicationStore{
       'uid': this.responseHeaders["uid"]
       }
     }).then((response) => {
-      console.log(response);
       this.setState({
         boards: response.data
       });
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -193,12 +191,11 @@ class ApplicationStore{
       'uid': this.responseHeaders["uid"]
       }
     }).then((response) => {
-      console.log(response);
       this.setState({
         board: response.data.board,
         board_pins: response.data.pins
       });
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -217,9 +214,7 @@ class ApplicationStore{
       this.setState({
         pin_data: response.data
       });
-      console.log(response)
-      this.getNewToken(response);
-      console.log(response);
+      ApplicationActions.getNewToken(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -237,11 +232,10 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      console.log(response);
       this.setState({
         pin_data: response.data
       });
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -255,7 +249,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       this.setState({
         pin_data: response.data
       });
@@ -272,7 +266,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       this.setState({
         pin_data: response.data
       });
@@ -293,8 +287,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      console.log(response);
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       this.setState({
         pin_data: response.data
       });
@@ -315,8 +308,7 @@ class ApplicationStore{
       'expiry': this.responseHeaders["expiry"],
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
-      console.log(response);
-      this.getNewToken(response);
+      ApplicationActions.getNewToken(response);
       this.setState({
         pin_data: response.data
       });

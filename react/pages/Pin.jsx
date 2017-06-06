@@ -3,7 +3,6 @@ import { Grid, Row, Image, Col, FormGroup, FormControl, Button, Glyphicon } from
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import CommentList from "../components/CommentList.jsx";
-import serverConfig from "../server_config.jsx";
 import { browserHistory } from "react-router";
 
 class Pin extends React.Component {
@@ -52,11 +51,11 @@ class Pin extends React.Component {
   }
 
   getPinContent(pin){
-    return ( ( pin.pin_content ) ? ( serverConfig.url + pin.pin_content.url) : "" )
+    return ( ( pin.pin_content ) ? ( pin.pin_content.url) : "" )
   }
 
   getUploaderContent(uploader){
-    return ( ( uploader.avatar ) ? (  serverConfig.url + uploader.avatar.url ) : "" )
+    return ( ( uploader.avatar ) ? ( uploader.avatar.url ) : "" )
   }
 
   createComment(event){

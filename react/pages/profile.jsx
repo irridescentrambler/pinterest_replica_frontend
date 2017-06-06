@@ -3,33 +3,26 @@ import { Grid, Col, Well, Row } from "react-bootstrap";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import { Updateprofile } from 'thousanday-react';
-import serverConfig from "../server_config.jsx";
 import { browserHistory } from "react-router";
+import ProfileStore from "../stores/ProfileStore.jsx";
+import ProfileActions from "../actions/ProfileActions.jsx";
 
 class Profile extends React.Component {
   constructor(props){
     super(props);
-    this.changeProfilePic = this.changeProfilePic.bind(this);
     this.state = {
-      userProfile: {}
+      profile: {}
     }
+    this.changeProfilePic = this.changeProfilePic.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount(){
     if(ApplicationStore.getState().responseData.uid == undefined){
       browserHistory.push("/signin");
     }
-    this.state = {
-      userProfile: ApplicationStore.getState().responseData
-    }
-  }
-
-  componentDidMount(){
-    ApplicationStore.listen(() => {
-      this.setState({
-        userProfile: ApplicationStore.getState().responseData
-      });
-    });
+    ProfileStore.listen(this.onChange);
+    ProfileActions.getProfile();
   }
 
   changeProfilePic(finalUrl){
@@ -40,15 +33,23 @@ class Profile extends React.Component {
     reader.readAsDataURL(finalUrl);
   }
 
+  onChange(state){
+    this.setState(state);
+  }
+
+  componentWillUnmount(){
+    ProfileStore.unlisten(this.onChange);
+  }
+
   render(){
     return(
       <Grid style = {{ "marginTop" : "100px" }}>
         <Row>
           <Col xs={12} md={6} lg={4}>
-            <Updateprofile src={ serverConfig.url + this.state.userProfile.avatar.url } width="200" saveProfile={ this.changeProfilePic } />
+            <Updateprofile src={ this.state.profile.avatar.url } width="200" saveProfile={ this.changeProfilePic } />
           </Col>
           <Col xs={12} md={6} lg={8}>
-            <Well>Email: { this.state.userProfile.email }</Well>
+            <Well>Email: { this.state.profile.email }</Well>
           </Col>
         </Row>
       </Grid>

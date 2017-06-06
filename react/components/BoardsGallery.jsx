@@ -2,11 +2,10 @@ import React from "react";
 import { Image, Row, Col } from "react-bootstrap";
 import StackGrid, { transitions } from "react-stack-grid";
 import { browserHistory } from "react-router";
-import serverConfig from "../server_config.jsx";
 
 const { scaleDown } = transitions;
 
-class Gallery extends React.Component {
+class BoardsGallery extends React.Component {
   constructor(props) {
     super(props);
     this.goToBoard = this.goToBoard.bind(this);
@@ -30,9 +29,9 @@ class Gallery extends React.Component {
           >
             { this.props.boards.map((board) => {
               return(
-              <div>
-                <Image onClick = { () => { this.goToBoard(board) } } src = { serverConfig.url + board.cover.url } responsive />
-                <p>{ board.name }</p>
+              <div style = {{ "paddingLeft" : "5%", "paddingRight" : "5%", "text-align" : "center" }}>
+                <Image style = {{ "borderRadius" : "5%" }} onClick = { () => { this.goToBoard(board) } } src = { board.cover.url } responsive />
+                <b>{ board.name }</b>
               </div>
               )
             }) }
@@ -41,4 +40,4 @@ class Gallery extends React.Component {
   }
 }
 
-export default Gallery;
+export default BoardsGallery;

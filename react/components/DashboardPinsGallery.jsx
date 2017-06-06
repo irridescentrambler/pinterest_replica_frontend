@@ -1,11 +1,14 @@
 import React from "react";
 import StackGrid, { transitions } from "react-stack-grid";
-import { Image, Button, Glyphicon  } from "react-bootstrap"
+import { Image, Button, Glyphicon  } from "react-bootstrap";
 import { browserHistory } from "react-router";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
-import serverConfig from "../server_config.jsx";
+import javascript_time_ago from 'javascript-time-ago';
 
+javascript_time_ago.locale(require('javascript-time-ago/locales/en'))
 const { scaleDown } = transitions;
+const time_ago = new javascript_time_ago('en-US');
+const twitter = time_ago.style.twitter();
 
 class DashboardPinsGallery extends React.Component {
 
@@ -44,14 +47,18 @@ class DashboardPinsGallery extends React.Component {
         { this.props.pins.map((pin) => {
         return(
         <div style={{ "marginTop" : "10px", "marginBottom" : "10px" }}>
-          <Image onClick={ () => { this.showPin(pin.id) } } src = { serverConfig.url + pin.pin_content.url } responsive style={{ "border-radius" : "15px" }} />
-          <div style={{ "marginTop" : "10px", "font-size" : "11px" }}>
+          <Image onClick={ () => { this.showPin(pin.id) } } src = { pin.pin_content.url } responsive style={{ "borderRadius" : "15px" }} />
+          <div style={{ "marginTop" : "10px", "fontSize" : "11px" }}>
             <b> { pin.description }</b>
             <div>
               <Glyphicon glyph="heart" />
               <b> { pin.cached_votes_up }</b>
             </div>
-            <Image src= { serverConfig.url + pin.user.avatar.url } style={{ "width" : "25px", "height" : "25px" }} circle />
+            <div>
+              <b>{ pin.created_at }</b>
+            </div>
+            <br/>
+            <Image src= { pin.user.avatar.url } style={{ "width" : "25px", "height" : "25px" }} circle />
             <b> { pin.user.email }</b>
           </div>
         </div>

@@ -2,7 +2,6 @@ import React from "react";
 import StackGrid, { transitions } from "react-stack-grid";
 import { Image } from "react-bootstrap"
 import { browserHistory } from "react-router";
-import serverConfig from "../server_config.jsx";
 
 const { scaleDown } = transitions;
 
@@ -32,7 +31,7 @@ class PinsGallery extends React.Component {
         { this.props.pins.map((pin) => {
         return(
         <div>
-          <Image onClick={ () => { this.showPin(pin.id) } } src = { serverConfig.url + pin.pin_content.url } responsive />
+          <Image onClick={ () => { this.showPin(pin.id) } } src = { pin.pin_content.url } responsive />
           <b> { pin.description }</b>
         </div>
         )

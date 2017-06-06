@@ -1,45 +1,47 @@
 import React from "react";
 import { Grid, Nav, NavItem, Row, Col } from "react-bootstrap";
-import ApplicationActions from "../actions/ApplicationActions.jsx";
-import ApplicationStore from "../stores/ApplicationStore.jsx";
 import { browserHistory } from 'react-router';
 import DashboardPinsGallery from "../components/DashboardPinsGallery.jsx";
-import Spinner from "react-spinkit";
+import Loader from "../components/Loader.jsx";
+import PinStore from "../stores/PinStore.jsx";
+import PinActions from "../actions/PinActions.jsx";
+import ApplicationStore from "../stores/ApplicationStore.jsx";
 
 class Dashboard extends React.Component {
 
   constructor(props){
     super(props);
-    ApplicationActions.getPins();
     this.onChange = this.onChange.bind(this);
+    this.state = {
+      pins: [],
+      loader_visibility: "visible"
+    }
   }
 
   componentWillMount(){
     if(ApplicationStore.getState().responseData.uid == undefined){
       browserHistory.push("/signin");
     }
-    this.state = {
-      pins: ApplicationStore.getState().pins
-    }
+    PinStore.listen(this.onChange);
   }
 
   componentDidMount(){
-    ApplicationStore.listen(() => {
-      this.onChange();
-    });
+    PinActions.getPins();
   }
 
-  onChange(){
-    this.setState({
-      pins: ApplicationStore.getState().pins
-    });
+  componentWillUnmount() {
+    PinStore.unlisten(this.onChange);
+  }
+
+  onChange(state){
+    this.setState(state);
   }
 
   render(){
     return(
       <Grid>
         <div style={{ "marginTop" : "75px" }}>
-          <Spinner name='double-bounce' />
+          <Loader visibility = { this.state.loader_visibility } />
           <DashboardPinsGallery pins = { this.state.pins } />
         </div>
       </Grid>

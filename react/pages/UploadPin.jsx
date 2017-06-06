@@ -5,7 +5,7 @@ import axios from "axios";
 import ApplicationActions from "../actions/ApplicationActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
 import StackGrid from "react-stack-grid";
-import Gallery from "../components/Gallery.jsx";
+import BoardsGallery from "../components/BoardsGallery.jsx";
 import { browserHistory } from "react-router";
 
 class UploadPin extends React.Component {
@@ -64,7 +64,7 @@ class UploadPin extends React.Component {
       <div>
         <Grid style={{ "marginTop" : "75px" }}>
           <Row>
-            <Button onClick = { this.toggleNewBoardForm } bsStyle="primary">Create new Board</Button>
+            <Button onClick = { this.toggleNewBoardForm } bsStyle="primary"><b>Create new Board</b></Button>
             <Modal show = { this.state.showNewBoardForm }>
 
               <Modal.Header>
@@ -79,8 +79,9 @@ class UploadPin extends React.Component {
                   <FormGroup>
                     <FormControl name="board_description" type="text" placeholder="Board description" />
                   </FormGroup>
-                  <Button type="submit" bsStyle="primary" bsSize="large" active>Upload Pin</Button>
-                  <Button onClick = { this.toggleNewBoardForm } bsStyle="primary" bsSize="large" active>Cancel</Button>
+                  <Button type="submit" bsStyle="primary" bsSize="large" active><b>Create</b></Button>
+                  &nbsp;&nbsp;
+                  <Button onClick = { this.toggleNewBoardForm } bsStyle="primary" bsSize="large" active><b>Cancel</b></Button>
                 </form>
               </Modal.Body>
 
@@ -89,7 +90,7 @@ class UploadPin extends React.Component {
         </Grid>
         <Grid>
           <div style = {{ "marginTop" : "20px" }}>
-            <Gallery boards = { this.state.boards } />
+            <BoardsGallery boards = { this.state.boards } />
           </div>
         </Grid>
       </div>
