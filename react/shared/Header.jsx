@@ -13,7 +13,7 @@ class Header extends React.Component {
     this.logout = this.logout.bind(this);
     this.showUploadForm = this.showUploadForm.bind(this);
     this.navigateToProfile = this.navigateToProfile.bind(this);
-    this.goToUploadPage = this.goToUploadPage.bind(this);
+    this.goToStash = this.goToStash.bind(this);
     this.onChange = this.onChange.bind(this);
     this.state = {
       responseHeaders: {},
@@ -56,8 +56,8 @@ class Header extends React.Component {
     });
   }
 
-  goToUploadPage(){
-    browserHistory.push("/upload_pin");
+  goToStash(){
+    browserHistory.push("/stash");
   }
 
   onChange(){
@@ -80,7 +80,7 @@ class Header extends React.Component {
               </Navbar.Header>
               <Navbar.Collapse>
                 <Nav pullRight>
-                  <NavItem onClick = { this.goToUploadPage }><Link to="/upload_pin"><b>Stash</b></Link></NavItem>
+                  <NavItem onClick = { this.goToStash }><Link to="/stash"><b>Stash</b></Link></NavItem>
                   <NavItem onClick={ this.navigateToProfile } ><Image src= { this.state.responseData.avatar.url } style={{ "width" : "35px", "height" : "35px" }} circle /></NavItem>
                   <NavItem ><Link to="/dashboard"><b>Dashboard</b></Link></NavItem>
                   <NavItem onClick = { this.logout }><Link to="/signin"><b>Logout</b></Link></NavItem>

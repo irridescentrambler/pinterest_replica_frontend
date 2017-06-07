@@ -24,7 +24,8 @@ class PinStore {
         }
     }).then((response) => {
       this.setState({
-        pins: response.data
+        pins: response.data,
+        loader_visibility: "hidden"
       })
       ApplicationActions.getNewToken(response);
     }).catch((error) => {

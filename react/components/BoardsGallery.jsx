@@ -29,7 +29,7 @@ class BoardsGallery extends React.Component {
           >
             { this.props.boards.map((board) => {
               return(
-              <div style = {{ "paddingLeft" : "5%", "paddingRight" : "5%", "text-align" : "center" }}>
+              <div style = {{ "paddingLeft" : "5%", "paddingRight" : "5%", "textAlign" : "center" }} key = { board.id }>
                 <Image style = {{ "borderRadius" : "5%" }} onClick = { () => { this.goToBoard(board) } } src = { board.cover.url } responsive />
                 <b>{ board.name }</b>
               </div>

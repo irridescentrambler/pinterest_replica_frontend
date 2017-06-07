@@ -157,7 +157,7 @@ class ApplicationStore{
       'uid': this.responseHeaders["uid"]
     }).then((response) => {
       ApplicationActions.getNewToken(response);
-      browserHistory.push("/upload_pin");
+      browserHistory.push("/stash");
     }).catch((error) => {
       alert("Unable to create board");
     });

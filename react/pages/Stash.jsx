@@ -7,36 +7,38 @@ import ApplicationStore from "../stores/ApplicationStore.jsx";
 import StackGrid from "react-stack-grid";
 import BoardsGallery from "../components/BoardsGallery.jsx";
 import { browserHistory } from "react-router";
+import StashActions from "../actions/StashActions.jsx";
+import StashStore from "../stores/StashStore.jsx";
 
-class UploadPin extends React.Component {
+class Stash extends React.Component {
   constructor(props){
     super(props);
     this.toggleNewBoardForm = this.toggleNewBoardForm.bind(this);
     this.createNewBoard = this.createNewBoard.bind(this);
     this.onChange = this.onChange.bind(this);
-  }
-
-  componentWillMount(){
-    if(ApplicationStore.getState().responseData.uid == undefined){
-      browserHistory.push("/signin");
-    }
     this.state = {
       showNewBoardForm: false,
       boards: []
     }
   }
 
-  componentDidMount(){
-    ApplicationActions.getBoards();
-    ApplicationStore.listen(() => {
-      this.onChange();
-    });
+  componentWillMount(){
+    if(ApplicationStore.getState().responseData.uid == undefined){
+      browserHistory.push("/signin");
+    }
   }
 
-  onChange(){
-    this.setState({
-      boards: ApplicationStore.getState().boards
-    });
+  componentDidMount(){
+    StashStore.listen(this.onChange);
+    StashActions.getBoards();
+  }
+
+  componentWillUnmount() {
+    StashStore.unlisten(this.onChange);
+  }
+
+  onChange(state){
+    this.setState(state);
   }
 
   toggleNewBoardForm(){
@@ -49,13 +51,13 @@ class UploadPin extends React.Component {
     event.preventDefault();
     let board_name = event.target.board_name.value;
     let board_description = event.target.board_description.value;
-    ApplicationActions.createNewBoard({
+    StashActions.createNewBoard({
       name: board_name,
       description: board_description
     });
     event.target.board_name.value = "";
     event.target.board_description.value = "";
-    ApplicationActions.getBoards();
+    StashActions.getBoards();
     this.toggleNewBoardForm();
   }
 
@@ -98,4 +100,4 @@ class UploadPin extends React.Component {
   }
 }
 
-export default UploadPin;
+export default Stash;

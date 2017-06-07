@@ -8,7 +8,7 @@ import Main from "./layout/main.jsx";
 import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import Dashboard from "./pages/dashboard.jsx";
 import Profile from "./pages/profile.jsx";
-import UploadPin from "./pages/UploadPin.jsx";
+import Stash from "./pages/Stash.jsx";
 import Board from "./pages/Board.jsx";
 import Pin from "./pages/Pin.jsx";
 
@@ -20,7 +20,7 @@ ReactDOM.render(
       <Route path="signup" component={ SignUp }/>
       <Route path="dashboard" component={ Dashboard } />
       <Route path="profile" component={ Profile }/>
-      <Route path="upload_pin" component={ UploadPin }/>
+      <Route path="stash" component={ Stash }/>
       <Route path="board/:id" component={ Board } />
       <Route path="pin/:id" component={ Pin } />
     </Route>

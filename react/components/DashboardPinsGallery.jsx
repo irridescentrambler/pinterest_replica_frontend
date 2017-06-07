@@ -46,7 +46,7 @@ class DashboardPinsGallery extends React.Component {
       >
         { this.props.pins.map((pin) => {
         return(
-        <div style={{ "marginTop" : "10px", "marginBottom" : "10px" }}>
+        <div style={{ "marginTop" : "10px", "marginBottom" : "10px" }} key = { pin.id }>
           <Image onClick={ () => { this.showPin(pin.id) } } src = { pin.pin_content.url } responsive style={{ "borderRadius" : "15px" }} />
           <div style={{ "marginTop" : "10px", "fontSize" : "11px" }}>
             <b> { pin.description }</b>
