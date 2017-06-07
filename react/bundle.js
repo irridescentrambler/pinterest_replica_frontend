@@ -8477,7 +8477,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var serverConfig = {
-  url: "http://localhost:3000"
+  url: "https://xpinterest-backend.herokuapp.com/"
 };
 
 exports.default = serverConfig;
