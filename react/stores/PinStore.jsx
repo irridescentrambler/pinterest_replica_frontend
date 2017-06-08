@@ -8,7 +8,7 @@ import ApplicationActions from "../actions/ApplicationActions.jsx";
 class PinStore {
   constructor() {
     this.pins = [];
-    this.loader_visibility = "visible";
+    this.loaded = false;
     this.bindListeners({
       getPins: PinActions.getPins
     })
@@ -25,7 +25,7 @@ class PinStore {
     }).then((response) => {
       this.setState({
         pins: response.data,
-        loader_visibility: "hidden"
+        loaded: true
       })
       ApplicationActions.getNewToken(response);
     }).catch((error) => {

@@ -9,6 +9,7 @@ import serverConfig from "../server_config.jsx";
 class StashStore {
   constructor() {
     this.boards = [];
+    this.loaded = false;
     this.showNewBoardForm = false;
     this.bindListeners({
       getBoards: StashActions.getBoards,
@@ -26,7 +27,8 @@ class StashStore {
       }
     }).then((response) => {
       this.setState({
-        boards: response.data
+        boards: response.data,
+        loaded: true
       });
       ApplicationActions.getNewToken(response);
     }).catch((error) => {
@@ -47,7 +49,6 @@ class StashStore {
       'uid': ApplicationStore.getState().responseHeaders["uid"]
     }).then((response) => {
       ApplicationActions.getNewToken(response);
-      browserHistory.push("/stash");
     }).catch((error) => {
       alert("Unable to create board");
     });

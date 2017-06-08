@@ -2,10 +2,10 @@ import React from "react";
 import { Grid, Nav, NavItem, Row, Col } from "react-bootstrap";
 import { browserHistory } from 'react-router';
 import DashboardPinsGallery from "../components/DashboardPinsGallery.jsx";
-import Loader from "../components/Loader.jsx";
 import PinStore from "../stores/PinStore.jsx";
 import PinActions from "../actions/PinActions.jsx";
 import ApplicationStore from "../stores/ApplicationStore.jsx";
+import Loader from "react-loader";
 
 class Dashboard extends React.Component {
 
@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.state = {
       pins: [],
-      loader_visibility: "visible"
+      loaded: false
     }
   }
 
@@ -26,7 +26,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount(){
-    PinActions.getPins();
+    window.setTimeout(PinActions.getPins(), 5000);
   }
 
   componentWillUnmount() {
@@ -41,8 +41,9 @@ class Dashboard extends React.Component {
     return(
       <Grid>
         <div style={{ "marginTop" : "75px" }}>
-          <Loader visibility = { this.state.loader_visibility } />
-          <DashboardPinsGallery pins = { this.state.pins } />
+          <Loader loaded={this.state.loaded}>
+            <DashboardPinsGallery pins = { this.state.pins } />
+          </Loader>
         </div>
       </Grid>
     );
