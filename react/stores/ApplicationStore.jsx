@@ -14,6 +14,7 @@ class ApplicationStore{
     this.board = {};
     this.board_pins = [];
     this.pin_data = {};
+    this.loaded = true;
     this.bindListeners({
       sendRequest: ApplicationActions.sendRequest,
       checkExpiration: ApplicationActions.checkExpiration,

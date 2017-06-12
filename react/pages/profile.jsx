@@ -6,6 +6,7 @@ import { Updateprofile } from 'thousanday-react';
 import { browserHistory } from "react-router";
 import ProfileStore from "../stores/ProfileStore.jsx";
 import ProfileActions from "../actions/ProfileActions.jsx";
+import { Card, CardImg, CardText, CardBlock, CardLink, CardTitle, CardSubtitle } from 'reactstrap';
 
 class Profile extends React.Component {
   constructor(props){

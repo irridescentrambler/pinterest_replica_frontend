@@ -5,7 +5,9 @@ class AuthenticationActions {
     return credentials;
   }
 
-
+  signIn(credentials){
+    return credentials;
+  }
 }
 
 export default Alt.createActions(AuthenticationActions);
